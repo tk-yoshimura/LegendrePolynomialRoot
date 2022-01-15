@@ -17,7 +17,7 @@ MultiPrecision Legendre Polynomial Root Finding
 
 ![coef](https://github.com/tk-yoshimura/LegendrePolynomialRoot/blob/main/figures/coef.svg)  
 
-### Roots with Gaussian quadrature Weights N &leq; 128, x &geq; 0
+### Roots with Gaussian quadrature Weights (N &leq; 128, x &geq; 0)
 
 [NumericTable(128bits 34digits)](https://github.com/tk-yoshimura/LegendrePolynomialRoot/blob/main/results/roots_n4.csv)  
 [NumericTable(256bits 73digits)](https://github.com/tk-yoshimura/LegendrePolynomialRoot/blob/main/results/roots_n8.csv)  
