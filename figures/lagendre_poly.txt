@@ -1,0 +1,15 @@
+\begin{eqnarray*}
+P_n(x) = 2^{-n} \sum_{k=0}^{n} \left( \begin{matrix} n \\ k \end{matrix} \right) ^2 (x-1)^{n-k} (x+1)^k
+\end{eqnarray*}
+
+\begin{eqnarray*}
+&& P_0(x)=1, P_1(x) = x, \\
+&& P_n(x) = \frac{1}{n} \left( (2n - 1) x P_{n-1}(x) - (n-1) P_{n-2}( x ) \right)
+\end{eqnarray*}
+
+\begin{eqnarray*}
+&& P_n(x) = \sum_{k=0}^{n} x^k c_{n, k} \\
+&& c_{0,0}=1, c_{1,0}=1, c_{1,1}=1, c_{i, j}=0 ~~~(i < j) \\
+&& c_{n, 0} = - c_{n-2, 0} \frac{n-1}{n}  \\
+&& c_{n, k} = c_{n-1, k-1} \frac{2n-1}{n}  - c_{n-2, k} \frac{n-1}{n}  ~~~~(k \geq 1)
+\end{eqnarray*}
