@@ -108,9 +108,9 @@ namespace LegendrePolynomialRootFinding {
         }
 
         public MultiPrecision<N> ToMultiPrecision<N>() where N : struct, IConstant {
-            MultiPrecision<Plus8<N>> n = $"{Numer}", d = $"{Denom}";
+            MultiPrecision<Plus16<N>> n = $"{Numer}", d = $"{Denom}";
 
-            return MultiPrecisionUtil.Convert<N, Plus8<N>>(n / d);
+            return MultiPrecisionUtil.Convert<N, Plus16<N>>(n / d);
         }
     }
 }

@@ -5,12 +5,8 @@ using System.IO;
 
 namespace LegendrePolynomialRootFinding {
 
-    internal struct Plus16<N> : IConstant where N : struct, IConstant {
-        public int Value => checked(default(N).Value + 16);
-    }
-
     internal class Program {
-        static void Main() {
+        static void Main_() {
             using StreamWriter sw = new("../../../../results_disused/roots_n64.csv");
 
             sw.WriteLine("x,w,Pn'(x),Pn(x+eps),Pn(x-eps)");
