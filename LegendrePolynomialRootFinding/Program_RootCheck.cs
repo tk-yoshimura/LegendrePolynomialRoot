@@ -3,7 +3,7 @@
 namespace LegendrePolynomialRootFinding {
 
     internal class Program_RootCheck {
-        static void Main() {
+        static void Main_() {
             using BinaryReader sbr = new(File.OpenRead("../../../../results_disused/roots_n64_01.bin"));
 
             for (int n = 4; n <= 255; n++) {
