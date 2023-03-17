@@ -1,6 +1,4 @@
 ﻿using MultiPrecision;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace LegendrePolynomialRootFinding {
     internal static class PolynomialGenerator {

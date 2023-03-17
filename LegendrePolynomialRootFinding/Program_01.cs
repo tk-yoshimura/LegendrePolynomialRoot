@@ -1,25 +1,22 @@
 ﻿using MultiPrecision;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace LegendrePolynomialRootFinding {
 
     internal class Program01 {
-        static void Main() {
-            using StreamWriter sw = new("../../../../results/roots_n4_01.csv");
+        static void Main_() {
+            using StreamWriter sw = new("../../../../results_disused/roots_n64_01_2.csv");
+            using BinaryWriter sbw = new(File.Open("../../../../results_disused/roots_n64_01.bin", FileMode.Create));
 
             sw.WriteLine("x,w");
 
-            MultiPrecision<Plus16<Pow2.N4>> dx = 0.25;
+            MultiPrecision<Plus32<Pow2.N64>> dx = 0.25;
 
-            for (int n = 4; n <= 128; n++) {
+            for (int n = 4; n <= 256; n++) {
                 Console.WriteLine($"P{n} root finding...");
 
-                Polynomial<Plus16<Pow2.N4>> poly = PolynomialGenerator.Table<Plus16<Pow2.N4>>(n);
+                Polynomial<Plus32<Pow2.N64>> poly = PolynomialGenerator.Table<Plus32<Pow2.N64>>(n);
 
-                List<MultiPrecision<Plus16<Pow2.N4>>> roots = new();
+                List<MultiPrecision<Plus32<Pow2.N64>>> roots = new();
 
                 while (dx > 0) {
                     roots.Clear();
@@ -28,19 +25,19 @@ namespace LegendrePolynomialRootFinding {
                         roots.Add(0);
                     }
 
-                    MultiPrecision<Plus16<Pow2.N4>> prev_y = poly.Value(dx / 2);
+                    MultiPrecision<Plus32<Pow2.N64>> prev_y = poly.Value(dx / 2);
 
-                    for (MultiPrecision<Plus16<Pow2.N4>> x = dx * 3 / 2; x < 1; x += dx) {
-                        MultiPrecision<Plus16<Pow2.N4>> y = poly.Value(x);
+                    for (MultiPrecision<Plus32<Pow2.N64>> x = dx * 3 / 2; x < 1; x += dx) {
+                        MultiPrecision<Plus32<Pow2.N64>> y = poly.Value(x);
 
                         if (prev_y.Sign != y.Sign) {
-                            MultiPrecision<Plus16<Pow2.N4>> root = MultiPrecisionUtil.NewtonRaphsonRootFinding(
+                            MultiPrecision<Plus32<Pow2.N64>> root = MultiPrecisionUtil.NewtonRaphsonRootFinding(
                                 x - dx / 2, poly.Value, poly.Diff, x - dx, x + dx / 4, break_overshoot: false, max_iterations: 256
                             );
 
                             roots.Add(root);
 
-                            Console.WriteLine($"  root found x={root}");
+                            Console.WriteLine($"  root found x={root:e10}");
                         }
 
                         prev_y = y;
@@ -55,20 +52,20 @@ namespace LegendrePolynomialRootFinding {
                 }
 
 
-                List<(MultiPrecision<Pow2.N4> x, MultiPrecision<Pow2.N4> w)> pts = new();
+                List<(MultiPrecision<Pow2.N64> x, MultiPrecision<Pow2.N64> w)> pts = new();
 
-                foreach (MultiPrecision<Plus16<Pow2.N4>> x in roots) {
-                    MultiPrecision<Pow2.N4> w = GaussLegendreWeight<Plus16<Pow2.N4>>.Eval(x, poly).Convert<Pow2.N4>() / 2;
+                foreach (MultiPrecision<Plus32<Pow2.N64>> x in roots) {
+                    MultiPrecision<Pow2.N64> w = GaussLegendreWeight<Plus32<Pow2.N64>>.Eval(x, poly).Convert<Pow2.N64>() / 2;
 
                     if (x != 0) {
-                        MultiPrecision<Pow2.N4> x_msft = ((1 - x) / 2).Convert<Pow2.N4>();
-                        MultiPrecision<Pow2.N4> x_psft = ((x + 1) / 2).Convert<Pow2.N4>();
+                        MultiPrecision<Pow2.N64> x_msft = ((1 - x) / 2).Convert<Pow2.N64>();
+                        MultiPrecision<Pow2.N64> x_psft = ((x + 1) / 2).Convert<Pow2.N64>();
 
                         pts.Add((x_msft, w));
                         pts.Add((x_psft, w));
                     }
-                    else { 
-                        pts.Add((MultiPrecision<Pow2.N4>.Point5, w));
+                    else {
+                        pts.Add((MultiPrecision<Pow2.N64>.Point5, w));
                     }
                 }
 
@@ -76,11 +73,16 @@ namespace LegendrePolynomialRootFinding {
 
                 sw.WriteLine($"P{n},");
 
+                sbw.Write(n);
+
                 foreach ((var x, var w) in pts) {
                     sw.WriteLine($"{x},{w}");
+                    sbw.Write(x);
+                    sbw.Write(w);
                 }
 
                 sw.Flush();
+                sbw.Flush();
             }
 
             Console.WriteLine("END");

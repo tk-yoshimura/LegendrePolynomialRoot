@@ -1,5 +1,4 @@
 ﻿using MultiPrecision;
-using System;
 using System.Numerics;
 
 namespace LegendrePolynomialRootFinding {
