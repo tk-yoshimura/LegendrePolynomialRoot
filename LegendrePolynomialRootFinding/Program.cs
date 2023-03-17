@@ -42,7 +42,7 @@ namespace LegendrePolynomialRootFinding {
                         prev_y = y;
                     }
 
-                    if (roots.Count >= (n + 1) / 2) {
+                    if (roots.Where(root => root.IsFinite).Count() >= (n + 1) / 2) {
                         break;
                     }
 
